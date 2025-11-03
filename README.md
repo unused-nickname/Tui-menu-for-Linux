@@ -9,19 +9,10 @@ The script uses the `dialog` utility to create a functional interface.
 - **Music Player** – Launches a terminal music player 
 - **Calendar** – Displays a monthly calendar
 - **Calculator** – Opens a terminal calculator
-- **Games** - Opens a list of simple TUI games
+- **Games** - Opens a list for simple TUI games
 - **Exit** – Closes the program
-- The "Default" TUI programs of the menu are:
-  - Yazi (File Manager)
-  - Network Manager - nmtui (Network Manager)
-  - NCMPCPP (Music Player)
-  - Calcurse (Calendar)
-  - Qalc (Calculator)
-  - Armagetronad (Tron lightcycles)
-  - Vitetris (Tetris)
-  - Chess-tui (Chess)
 
-**These programs MUST be installed for the menu to work as expected in its default form.**
+**Now with placeholders so you can add you willing TUI program**
 
 ## Requirements
 Before running the script, make sure you have the `dialog` package installed:
