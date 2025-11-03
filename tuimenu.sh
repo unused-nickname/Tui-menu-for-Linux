@@ -1,27 +1,41 @@
 #!/bin/bash
 
+#General Variables and placeholders
+file_manager="<file_manager_tui>"
+network_manager="<network_manager_tui>"
+music_player="<music_player_tui>"
+calendar="<calendar_tui>"
+calculator="<calculator_tui>"
+#Games placeholders
+game_1="<game_1>"
+game_2="<game_2>"
+game_3="<game_3>"
+#you can add more variables for more games if you want
+#you will also need to those variables to the function
+
+#FUNCTION FOR GAMES MENU
 function games_menu() {
     while true; do
         opcao=$(dialog --title "Games Menu" \
                        --menu "Choose a game:" 15 50 5 \
-                       1 "Tron Lightcycles" \
-                       2 "Tetris" \
-                       3 "Chess"\
+                       1 "$game_1"\
+                       2 "$game_2"\
+                       3 "$game_3"\
                        4 "Back to Main Menu" \
                        2>&1 >/dev/tty)
         clear
         case $opcao in
             1)
                 clear
-                armagetronad
+                $game_1
                 ;;
             2)
                 clear
-                vitetris
+                $game_2
                 ;;
             3)
                 clear
-                chess-tui
+                $game_3
                 ;;
             4)
                 break      
@@ -29,6 +43,8 @@ function games_menu() {
         esac
     done
 }
+
+#FUNCTION FOR SYSTEM INFO TUI
 function system_info() {
     while true; do
         opcao=$(dialog --title "General System Info" \
@@ -69,6 +85,7 @@ function system_info() {
     done               
 }
 
+#SYSTEM 
 while true; do
     opcao=$(dialog --title "TUI Program Manager" \
                    --menu "Please Select:" 15 50 5 \
@@ -89,24 +106,24 @@ while true; do
             system_info
             ;; 
         2)
-            dialog --msgbox "Opening File Manager (Yazi)..." 10 50
-            yazi
+            dialog --msgbox "Opening File Manager ..." 10 50
+            $file_manager
             ;;
         3)
-            dialog --msgbox "Opening Network Manager (NMTui)..." 10 50
-            nmtui
+            dialog --msgbox "Opening Network Manager ..." 10 50
+            $network_manager
             ;;
         4)
-            dialog --msgbox "Opening Music Player (ncmpcpp)..." 10 50
-            ncmpcpp
+            dialog --msgbox "Opening Music Player ..." 10 50
+            $music_player
             ;;
         5)
-            dialog --msgbox "Opening Calendar (Calcurse)..." 10 50
-            calcurse
+            dialog --msgbox "Opening Calendar ..." 10 50
+            $calendar
             ;;
         6)
-            dialog --msgbox "Opening Calculator (Qalc)..." 10 50
-            qalc
+            dialog --msgbox "Opening Calculator ..." 10 50
+            $calculator
             ;;
         7)
             games_menu
