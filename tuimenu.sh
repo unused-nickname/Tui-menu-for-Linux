@@ -11,12 +11,25 @@ game_1="<game_1>"
 game_2="<game_2>"
 game_3="<game_3>"
 #you can add more variables for more games if you want
-#you will also need to those variables to the function
+#you will also need to add those variables to the function
+
+#FUNCTION FOR PROGRAM CHECKING
+#checks if a valid program is called in the Placeholders variables
+function check_program() {
+    local command="$1"
+    local name="$2"
+
+    if [ -z "$command" ] || [[ "$command" == \<* ]]; then
+        dialog --title "Error" --msgbox "Failed to launch program:\nNo $name program defined!" 10 50
+        return 1
+    fi
+    return 0
+}
 
 #FUNCTION FOR GAMES MENU
 function games_menu() {
     while true; do
-        opcao=$(dialog --title "Games Menu" \
+        opcao=$(dialog --no-cancel --title "Games Menu" \
                        --menu "Choose a game:" 15 50 5 \
                        1 "$game_1"\
                        2 "$game_2"\
@@ -47,7 +60,7 @@ function games_menu() {
 #FUNCTION FOR SYSTEM INFO TUI
 function system_info() {
     while true; do
-        opcao=$(dialog --title "General System Info" \
+        opcao=$(dialog --no-cancel --title "General System Info" \
                        --menu "Choose a option:" 15 50 5 \
                        1 "Who am i?"\
                        2 "System Info"\
@@ -87,7 +100,7 @@ function system_info() {
 
 #SYSTEM 
 while true; do
-    opcao=$(dialog --title "TUI Program Manager" \
+    opcao=$(dialog --no-cancel --title "TUI Program Manager" \
                    --menu "Please Select:" 15 50 5 \
                    1 "System Info"\
                    2 "File Manager"\
@@ -106,25 +119,50 @@ while true; do
             system_info
             ;; 
         2)
-            dialog --msgbox "Opening File Manager ..." 10 50
-            $file_manager
-            ;;
+            if check_program "$file_manager" "File Manager"; then
+                dialog --infobox "Opening File Manager ..." 5 50
+                sleep 2 #Omit to open instantly
+                if ! $file_manager >/dev/tty 2>&1; then
+                    dialog --title "Error" --msgbox "Failed to launch Program:\nNo File Manager found with command('$file_manager')" 8 60
+                    fi
+                fi
+                ;;
         3)
-            dialog --msgbox "Opening Network Manager ..." 10 50
-            $network_manager
-            ;;
+            if check_program "$network_manager" "Network Manager"; then
+                dialog --infobox "Opening Network Manager ..." 5 50
+                sleep 2 #Omit to open instantly
+                if ! $network_manager >/dev/tty 2>&1; then
+                    dialog --title "Error" --msgbox "Failed to launch Program:\nNo Network Manager found with command('$network_manager')" 8 60
+                    fi
+                fi
+                ;;
         4)
-            dialog --msgbox "Opening Music Player ..." 10 50
-            $music_player
-            ;;
+            if check_program "$music_player" "Music Player"; then
+                dialog --infobox "Opening Music Player ..." 5 50
+                sleep 2 #Omit to open instantly
+                if ! $music_player >/dev/tty 2>&1; then
+                    dialog --title "Error" --msgbox "Failed to launch Program:\nNo Music Player found with command('$music_player')" 8 60
+                    fi
+                fi
+                ;;
         5)
-            dialog --msgbox "Opening Calendar ..." 10 50
-            $calendar
-            ;;
+            if check_program "$calendar" "Calendar"; then
+                dialog --infobox "Opening Calendar ..." 5 50
+                sleep 2 #Omit to open instantly
+                if ! $calendar >/dev/tty 2>&1; then
+                    dialog --title "Error" --msgbox "Failed to launch Program:\nNo Calendar found with command('$calendar')" 8 60
+                    fi
+                fi
+                ;;
         6)
-            dialog --msgbox "Opening Calculator ..." 10 50
-            $calculator
-            ;;
+            if check_program "$calculator" "Calculator"; then
+                dialog --infobox "Opening Calculator ..." 5 50
+                sleep 2 #Omit to open instantly
+                if ! $calculator >/dev/tty 2>&1; then
+                    dialog --title "Error" --msgbox "Failed to launch Program:\nNo Calculator found with command('$calculator')" 8 60
+                    fi
+                fi
+                ;;
         7)
             games_menu
             ;;
